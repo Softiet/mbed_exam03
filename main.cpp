@@ -44,7 +44,7 @@ float y_velocity = 0;
 int timestamp = 0;
 
 std::vector<float> vx_data;
-std::vector<float> xy_data;
+std::vector<float> vy_data;
 std::vector<int> timestamp_data;
 
 
@@ -151,10 +151,15 @@ int main() {
 // FUNCTIONS :: GENERAL 
 void getVelo(Arguments *in, Reply *out){
       printf("RPC get called\n\r");
-      int temp = 0;
-      out->putData(x_velocity);
-      out->putData(y_velocity);
-      out->putData(timestamp);
+      int temp = vx_data.size();
+      for(int i =0;i<temp;i++){
+        out->putData(vx_data[i]);
+        out->putData(vy_data[i]);
+        out->putData(timestamp_data[i]);
+      }
+      vx_data.clear();
+      vy_data.clear();
+      timestamp_data.clear();
 }
 
 void velo_update(){
@@ -177,7 +182,7 @@ void velo_update(){
 
     vx_data.push_back(x_velocity);
     vy_data.push_back(y_velocity);
-    timestamp_data.push_bak(timestamp);
+    timestamp_data.push_back(timestamp);
     
     // printf("velo_updated!\n\rvx:%f\n\rvy:%f\n\rt:%d\n\r",x_velocity,y_velocity,timestamp);
 }

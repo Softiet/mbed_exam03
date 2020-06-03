@@ -100,7 +100,7 @@ print("MQTT ONlINE")
 
 print("start sending RPC")
 while(1):
-    time.sleep(1)
+    time.sleep(0.5)
     print("RPC GO!")
     s.write("/getVelo/run\r".encode())
     string = ""
