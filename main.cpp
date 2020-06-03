@@ -179,10 +179,11 @@ void velo_update(){
     acc_t[2] = ((float)acc16) / 4096.0f;
     x_velocity = x_velocity + 9.8 * acc_t[0] * 0.1;
     y_velocity = y_velocity + 9.8 * acc_t[1] * 0.1;
-
-    vx_data.push_back(x_velocity);
-    vy_data.push_back(y_velocity);
-    timestamp_data.push_back(timestamp);
+    if(vx_data.size()<=30){
+        vx_data.push_back(x_velocity);
+        vy_data.push_back(y_velocity);
+        timestamp_data.push_back(timestamp);  
+    }    
     
     // printf("velo_updated!\n\rvx:%f\n\rvy:%f\n\rt:%d\n\r",x_velocity,y_velocity,timestamp);
 }
@@ -223,7 +224,7 @@ void xbee_rx_interrupt(void){
 
 void xbee_rx(void){
   char buf[100] = {0};
-  char outbuf[100] = {0};
+  char outbuf[2000] = {0};
   while(xbee.readable()){
     for (int i=0; ; i++) {
       char recv = xbee.getc();
